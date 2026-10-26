@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="img/logo.png">
+<title>Academia R4 Sports</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Academia R4 Sports em Apucarana-PR: musculação, funcional, spinning, corrida, triathlon e personal trainer na Av. Jaboti, 850, ao lado do Lago Jaboti.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800;1,900&display=swap">
+<style>
+/* Layout: faixa panorâmica de abertura → fita laranja → barra que carrega anilhas no scroll → estrutura → grade de horários → comunidade → planos → local. Visual único escuro, fiel à marca. */
+:root{
+  --ink:#0F0D0C;        /* fundo, preto quente */
+  --ink-2:#1A1715;      /* superfícies */
+  --ink-3:#26211E;      /* bordas / trilhos */
+  --chalk:#F6F2EE;      /* texto principal, branco giz */
+  --muted:#A69C95;      /* texto secundário */
+  --r4:#FF5A1A;         /* laranja R4 */
+  --r4-deep:#D9430B;
+  --ring:#E3266F;       /* magenta do anel do perfil, só em detalhes */
+  --wa:#25D366;
+  --f-display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  --max:1180px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--ink);color:var(--chalk);font-family:var(--f-body);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--r4);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+h1,h2,h3{font-family:var(--f-display);font-style:italic;font-weight:900;line-height:.92;letter-spacing:-.01em;text-transform:uppercase;margin:0;text-wrap:balance}
+h2{font-size:clamp(2.6rem,6.4vw,5rem)}
+h3{font-size:1.9rem;font-weight:800}
+p{margin:0}
+.eyebrow{font-family:var(--f-display);font-weight:700;font-size:.95rem;letter-spacing:.18em;text-transform:uppercase;color:var(--r4)}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
+.o{color:var(--r4)}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-family:var(--f-display);font-weight:800;font-style:italic;font-size:1.15rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;padding:.85rem 1.4rem;border-radius:4px;border:2px solid transparent;transition:transform .2s,background .2s,border-color .2s;transform:skewX(-8deg)}
+.btn > *{transform:skewX(8deg)}
+.btn:hover{transform:skewX(-8deg) translateY(-2px)}
+.btn-r4{background:var(--r4);color:#fff}
+.btn-r4:hover{background:var(--r4-deep)}
+.btn-wa{background:var(--wa);color:#06280F}
+.btn-line{border-color:var(--chalk);color:var(--chalk)}
+.btn-line:hover{background:var(--chalk);color:var(--ink)}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* topo */
+.top{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .3s,box-shadow .3s}
+.top.solid{background:color-mix(in srgb,var(--ink) 92%,transparent);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--ink-3)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.7rem}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.brand img{width:46px;height:46px;border-radius:50%;padding:2px;background:conic-gradient(from 200deg,var(--r4),var(--ring),#F7B21B,var(--r4))}
+.brand b{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:1.35rem;letter-spacing:.02em;line-height:1}
+.brand small{display:block;font-family:var(--f-body);font-style:normal;font-weight:500;font-size:.7rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.nav{display:flex;gap:1.6rem;align-items:center}
+.nav a{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;font-size:1rem;color:var(--muted)}
+.nav a:hover{color:var(--chalk)}
+.nav .btn{font-size:1rem;padding:.55rem 1rem;color:#06280F}
+@media (max-width:860px){.nav a:not(.btn){display:none}}
+
+/* hero panorâmica */
+.hero{position:relative;min-height:clamp(560px,86vh,780px);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.pano{position:absolute;inset:0;z-index:-2;background-color:var(--ink-2);background-repeat:repeat-x;background-size:auto 100%;cursor:grab;touch-action:pan-y}
+.pano.drag{cursor:grabbing}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:
+  linear-gradient(180deg,rgba(15,13,12,.75) 0%,rgba(15,13,12,.15) 30%,rgba(15,13,12,.35) 55%,var(--ink) 100%),
+  linear-gradient(90deg,rgba(15,13,12,.85) 0%,rgba(15,13,12,.2) 60%)}
+.hero .wrap{width:100%;padding-block:8rem 3.5rem;pointer-events:none}
+.hero .wrap > *{pointer-events:auto}
+.hero h1{font-size:clamp(3rem,7.2vw,6.4rem);max-width:16ch}
+.hero h1 span{display:block}
+.hero h1 .o{-webkit-text-stroke:0}
+.hero .lead{color:#E2D9D2;margin-top:1.2rem;font-size:clamp(1.05rem,2vw,1.25rem)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
+.pano-hint{position:absolute;right:calc(var(--gut-r) + 8px);bottom:1.4rem;display:flex;align-items:center;gap:.5rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#E2D9D2;background:rgba(15,13,12,.6);border:1px solid rgba(246,242,238,.2);padding:.45rem .8rem;border-radius:999px;backdrop-filter:blur(6px);pointer-events:none}
+.pano-hint i{width:18px;height:18px;border:2px solid var(--r4);border-radius:50%;position:relative}
+.pano-hint i::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--r4);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{transform:scale(.4);opacity:.4}}
+@media (max-width:640px){.pano-hint{bottom:auto;top:84px}}
+.float-gear{position:absolute;z-index:-1;pointer-events:none;opacity:.9;will-change:transform}
+
+/* fita */
+.tape-wrap{overflow:hidden;margin-top:-2.6rem;padding-block:1.4rem;position:relative;z-index:3}
+.tape{background:var(--r4);color:#fff;overflow:hidden;transform:rotate(-1.5deg);margin:0 -2%;width:104%;position:relative;z-index:3;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.tape-track{display:flex;width:max-content;gap:2.2rem;padding:.75rem 0;font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(1.5rem,3vw,2.2rem);text-transform:uppercase;white-space:nowrap;will-change:transform}
+.tape-track span{display:flex;align-items:center;gap:2.2rem}
+.tape-track span::after{content:"";width:12px;height:12px;background:var(--ink);transform:skewX(-12deg)}
+
+/* números */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink-3);border:1px solid var(--ink-3);margin-top:3.5rem}
+.stat{background:var(--ink);padding:1.6rem 1.4rem}
+.stat b{display:block;font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.92rem}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}}
+
+section{position:relative}
+.sec{padding-block:6.5rem}
+.sec-head{display:grid;gap:1rem;margin-bottom:3rem}
+
+/* barra que carrega */
+.load{display:grid;grid-template-columns:1.05fr 1fr;gap:3rem;align-items:start}
+.bar-stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 90px);display:grid;gap:1rem;padding:1.6rem;border:1px solid var(--ink-3);background:radial-gradient(120% 90% at 50% 0%,#2A201B 0%,var(--ink-2) 60%);border-radius:10px}
+.bar-stage svg{width:100%;height:auto;overflow:visible}
+.kg{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;border-top:1px dashed var(--ink-3);padding-top:1rem}
+.kg b{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(3rem,7vw,5rem);line-height:.9;font-variant-numeric:tabular-nums}
+.kg b small{font-size:.45em;color:var(--r4);margin-left:.15em}
+.kg span{color:var(--muted);font-size:.85rem;text-align:right;max-width:20ch}
+.legend{display:flex;flex-wrap:wrap;gap:.45rem .9rem;font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:.35rem;vertical-align:-1px}
+.steps{display:grid;gap:7vh;padding-block:2vh 12vh}
+.step{display:grid;gap:1rem;padding:1.6rem 0 1.6rem 1.4rem;border-left:3px solid var(--ink-3);transition:border-color .4s,opacity .4s;opacity:.55}
+.step.on{border-color:var(--r4);opacity:1}
+.step .tag{font-family:var(--f-display);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.9rem;color:var(--r4)}
+.step h3{font-size:clamp(2.2rem,4.4vw,3.2rem)}
+.step p{color:var(--muted);max-width:52ch}
+.step figure{margin:0;border-radius:8px;overflow:hidden;aspect-ratio:4/3;max-width:100%}
+.step figure img{width:100%;height:100%;object-fit:cover}
+.step ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}
+.step li{font-size:.85rem;border:1px solid var(--ink-3);padding:.3rem .7rem;border-radius:999px;color:#E2D9D2}
+@media (max-width:900px){
+  .load{grid-template-columns:1fr;gap:1.2rem}
+  .bar-stage{top:calc(env(safe-area-inset-top,0px) + 70px);z-index:5;padding:1rem;background:var(--ink-2);box-shadow:0 18px 30px rgba(15,13,12,.85)}
+  .legend{display:none}
+  .kg b{font-size:2.6rem}
+  .steps{gap:3rem}
+}
+
+/* estrutura */
+.gear{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:120px;gap:12px}
+.ph{position:relative;overflow:hidden;border-radius:8px;background:var(--ink-2);margin:0}
+.ph img{width:100%;height:118%;object-fit:cover;will-change:transform}
+.ph figcaption{position:absolute;left:12px;bottom:12px;font-family:var(--f-display);font-weight:700;font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(15,13,12,.78);padding:.25rem .6rem;border-radius:3px}
+.g1{grid-column:span 5;grid-row:span 4}
+.g2{grid-column:span 4;grid-row:span 2}
+.g3{grid-column:span 3;grid-row:span 2}
+.g4{grid-column:span 7;grid-row:span 2;display:grid;grid-template-columns:1fr 1fr;gap:12px;background:none}
+.g4 .ph{height:100%}
+.novo{grid-column:span 12;display:grid;grid-template-columns:auto 1fr auto;gap:1.5rem;align-items:center;background:var(--ink-2);border:1px solid var(--ink-3);border-radius:8px;padding:1.4rem 1.6rem;grid-row:span 1;height:auto}
+.novo .badge{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:1.5rem;background:var(--r4);color:#fff;padding:.3rem .8rem;transform:skewX(-10deg)}
+.novo p{color:var(--muted)}
+.novo p b{color:var(--chalk)}
+@media (max-width:860px){
+  .gear{grid-template-columns:1fr 1fr;grid-auto-rows:150px}
+  .g1{grid-column:span 2;grid-row:span 3}
+  .g2,.g3{grid-column:span 1;grid-row:span 2}
+  .g4{grid-column:span 2;grid-row:span 2}
+  .novo{grid-template-columns:1fr;grid-column:span 2}
+}
+
+/* horários */
+.hours{display:grid;grid-template-columns:320px 1fr;gap:2.5rem;align-items:start}
+.open-card{border:1px solid var(--ink-3);border-radius:10px;padding:1.6rem;background:var(--ink-2);display:grid;gap:1.1rem}
+.open-card .now{display:flex;align-items:center;gap:.6rem;font-weight:600}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--muted);flex:none}
+.dot.live{background:var(--wa);box-shadow:0 0 0 0 rgba(37,211,102,.6);animation:ping 1.8s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.open-row{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--ink-3);padding-top:.8rem;font-variant-numeric:tabular-nums}
+.open-row span{color:var(--muted)}
+.open-row b{font-family:var(--f-display);font-style:italic;font-size:1.5rem;font-weight:800}
+.days{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.3rem}
+.days button{font-family:var(--f-display);font-weight:800;font-style:italic;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em;background:transparent;color:var(--muted);border:1px solid var(--ink-3);border-radius:4px;padding:.5rem .95rem;cursor:pointer}
+.days button[aria-pressed="true"]{background:var(--chalk);color:var(--ink);border-color:var(--chalk)}
+.days button.today::after{content:"hoje";font-family:var(--f-body);font-style:normal;font-weight:600;font-size:.6rem;letter-spacing:.1em;margin-left:.4rem;color:var(--r4);vertical-align:2px}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.tl li{display:grid;grid-template-columns:96px 1fr auto;align-items:center;gap:1rem;padding:1rem 1.1rem;border:1px solid var(--ink-3);border-radius:8px;background:var(--ink)}
+.tl time{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:1.7rem;font-variant-numeric:tabular-nums;color:var(--r4)}
+.tl b{font-weight:600}
+.tl small{display:block;color:var(--muted);font-size:.85rem}
+.tl .chip{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ink-3);border-radius:999px;padding:.2rem .6rem;color:var(--muted);white-space:nowrap}
+@media (max-width:860px){.hours{grid-template-columns:1fr}.tl li{grid-template-columns:72px 1fr}.tl .chip{display:none}}
+
+/* comunidade */
+.comm{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.comm-ph{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.comm-ph .ph{aspect-ratio:3/4}
+.comm-ph .ph:first-child{grid-column:span 2;aspect-ratio:16/10}
+.events{display:grid;gap:1rem;margin-top:2rem}
+.ev{display:grid;grid-template-columns:76px 1fr;gap:1rem;align-items:start;padding-top:1rem;border-top:1px solid var(--ink-3)}
+.ev .d{font-family:var(--f-display);font-style:italic;font-weight:900;line-height:.9;text-align:center;border:2px solid var(--r4);border-radius:6px;padding:.4rem 0}
+.ev .d b{display:block;font-size:2rem}
+.ev .d span{font-size:.85rem;color:var(--r4);letter-spacing:.08em}
+.ev h3{font-size:1.5rem}
+.ev p{color:var(--muted);font-size:.95rem}
+@media (max-width:860px){.comm{grid-template-columns:1fr}}
+
+/* planos */
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;align-items:stretch}
+.plan{display:flex;flex-direction:column;gap:1.1rem;padding:1.8rem 1.5rem;border:1px solid var(--ink-3);border-radius:10px;background:var(--ink-2);position:relative}
+.plan.hot{background:linear-gradient(170deg,#3A1A0C 0%,var(--ink-2) 55%);border-color:var(--r4)}
+.plan .flag{position:absolute;top:-13px;left:1.5rem;background:var(--r4);color:#fff;font-family:var(--f-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.06em;font-size:.9rem;padding:.15rem .7rem;transform:skewX(-10deg)}
+.plan h3{font-size:2rem}
+.plan .who{color:var(--muted);font-size:.92rem;min-height:3em}
+.price{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:2.3rem;line-height:1;font-variant-numeric:tabular-nums}
+.price small{font-size:.9rem;font-style:normal;font-family:var(--f-body);font-weight:500;color:var(--muted);margin-left:.3rem}
+.price.ask{font-size:1.45rem;color:var(--r4)}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem;flex:1}
+.plan li{display:grid;grid-template-columns:18px 1fr;gap:.6rem;font-size:.93rem;color:#E2D9D2}
+.plan li::before{content:"";width:12px;height:12px;margin-top:.42em;background:var(--r4);clip-path:polygon(0 45%,40% 85%,100% 0,100% 22%,40% 100%,0 65%)}
+.plan .btn{width:100%;font-size:1.05rem}
+.plans-note{margin-top:1.5rem;color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:1040px){.plans{grid-template-columns:1fr 1fr;row-gap:1.8rem}}
+@media (max-width:600px){.plans{grid-template-columns:1fr}}
+.kb{position:absolute;right:-60px;top:40px;width:260px;opacity:.07;pointer-events:none;will-change:transform}
+
+/* local */
+.local{display:grid;grid-template-columns:1.15fr 1fr;gap:0;border:1px solid var(--ink-3);border-radius:12px;overflow:hidden;background:var(--ink-2)}
+.map{position:relative;min-height:380px;background:#14110F;display:block;text-decoration:none}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map .open{position:absolute;left:1rem;bottom:1rem;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);border:1px solid var(--ink-3);padding:.4rem .7rem;border-radius:4px}
+.addr{padding:2.2rem;display:grid;gap:1.3rem;align-content:start}
+.addr address{font-style:normal;font-size:1.15rem;line-height:1.5}
+.addr address b{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:2rem;display:block;text-transform:uppercase;line-height:1}
+.addr .row{display:flex;flex-wrap:wrap;gap:.7rem}
+.addr .btn{font-size:1rem;padding:.7rem 1.1rem}
+.copy{background:none;border:1px solid var(--ink-3);color:var(--muted);border-radius:4px;padding:.35rem .7rem;font:500 .8rem var(--f-body);cursor:pointer}
+@media (max-width:860px){.local{grid-template-columns:1fr}.map{min-height:280px}}
+
+/* cta final */
+.final{text-align:left;padding-block:6rem;overflow:hidden}
+.final h2{font-size:clamp(3rem,9vw,7.5rem);max-width:12ch}
+.final .hero-cta{margin-top:2.2rem}
+.big-r4{position:absolute;right:-2%;bottom:-8%;font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(14rem,34vw,30rem);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--ink-3);pointer-events:none;z-index:-1}
+footer{border-top:1px solid var(--ink-3);padding-block:2rem 6rem;color:var(--muted);font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+footer a{color:var(--chalk)}
+
+/* whatsapp flutuante */
+.fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:70;width:62px;height:62px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.45);text-decoration:none}
+.fab svg{width:32px;height:32px}
+.fab::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--wa);opacity:.5;animation:ring 2.4s infinite}
+@keyframes ring{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+.progress{position:fixed;left:0;top:env(safe-area-inset-top,0px);height:3px;background:linear-gradient(90deg,var(--r4),var(--ring));z-index:80;width:100%;transform-origin:0 50%;transform:scaleX(0)}
+
+.rv{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.pre{transform:translateY(28px)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv.pre{transform:none}
+}
+</style>
+</head>
+<body>
+
+
+<div class="progress" id="progress"></div>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Academia R4 Sports, início">
+      <img src="img/logo.png" alt="" width="46" height="46">
+      <span><b>R4 SPORTS</b><small>Academia · Apucarana</small></span>
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#modalidades">Modalidades</a>
+      <a href="#horarios">Horários</a>
+      <a href="#planos">Planos</a>
+      <a href="#local">Local</a>
+      <a class="btn btn-wa" data-wa="Olá! Vim pelo site e quero saber mais sobre a R4 Sports." href="#"><span>WhatsApp</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio" aria-label="Apresentação">
+  <div class="pano" id="pano" role="img" aria-label="Vista panorâmica da Academia R4 Sports. Arraste para girar."></div>
+
+  <svg class="float-gear" data-speed="-0.25" style="left:62%;top:16%;width:150px" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#FF5A1A"/><circle cx="50" cy="50" r="38" fill="none" stroke="#0F0D0C" stroke-width="3" opacity=".35"/><circle cx="50" cy="50" r="10" fill="#0F0D0C"/><text x="50" y="30" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-style="italic" font-weight="900" font-size="13" fill="#0F0D0C">20 KG</text></svg>
+  <svg class="float-gear" data-speed="0.18" style="left:80%;top:52%;width:210px" viewBox="0 0 220 80" aria-hidden="true"><rect x="0" y="34" width="220" height="12" rx="4" fill="#3A332E"/><rect x="18" y="8" width="26" height="64" rx="6" fill="#F6F2EE"/><rect x="46" y="16" width="18" height="48" rx="5" fill="#FF5A1A"/><rect x="156" y="16" width="18" height="48" rx="5" fill="#FF5A1A"/><rect x="176" y="8" width="26" height="64" rx="6" fill="#F6F2EE"/></svg>
+  <svg class="float-gear" data-speed="-0.12" style="left:52%;top:62%;width:70px" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#26211E" stroke="#FF5A1A" stroke-width="4"/><circle cx="50" cy="50" r="9" fill="#0F0D0C"/></svg>
+
+  <div class="wrap">
+    <p class="eyebrow">Academia R4 Sports · Av. Jaboti, 850 · Apucarana-PR</p>
+    <h1><span>Seu treino.</span><span>Nossa estrutura.</span><span class="o">Seus resultados.</span></h1>
+    <p class="lead">Musculação, funcional, spinning, corrida e triathlon em um só lugar, a poucos passos do Lago Jaboti. Abrimos às 5h para caber na sua rotina.</p>
+    <div class="hero-cta">
+      <a class="btn btn-wa" data-wa="Olá! Quero agendar uma aula experimental na R4 Sports." href="#"><span>Agendar aula experimental</span></a>
+      <a class="btn btn-line" href="#planos"><span>Ver planos</span></a>
+    </div>
+  </div>
+  <div class="pano-hint" aria-hidden="true"><i></i>Arraste · vista 360°</div>
+</section>
+
+<div class="tape-wrap" aria-hidden="true"><div class="tape"><div class="tape-track" id="tape"></div></div></div>
+
+<div class="wrap">
+  <div class="stats rv">
+    <div class="stat"><b data-count="5" data-suffix="h">5h</b><span>abertura de segunda a sexta</span></div>
+    <div class="stat"><b data-count="6">6</b><span>modalidades no mesmo endereço</span></div>
+    <div class="stat"><b data-count="16.5" data-suffix="h" data-dec="1">16,5h</b><span>de portas abertas por dia útil</span></div>
+    <div class="stat"><b data-count="3.5" data-suffix=" mil" data-dec="1">3,5 mil</b><span>pessoas na comunidade R4 no Instagram</span></div>
+  </div>
+</div>
+
+<section class="sec" id="modalidades" aria-labelledby="mod-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Modalidades</p>
+      <h2 id="mod-t">Role a página e <span class="o">carregue a barra</span></h2>
+      <p class="lead">Cada modalidade da R4 é uma anilha a mais no seu treino. Vá descendo e veja quanto peso a sua rotina aguenta.</p>
+    </div>
+    <div class="load" id="load">
+      <div class="bar-stage" aria-hidden="true">
+        <svg viewBox="0 0 800 280" id="barbell">
+          <defs>
+            <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8D2CC"/><stop offset=".5" stop-color="#8E8781"/><stop offset="1" stop-color="#5E5853"/></linearGradient>
+          </defs>
+          <rect x="20" y="132" width="760" height="16" rx="5" fill="url(#steel)"/>
+          <rect x="150" y="120" width="14" height="40" rx="3" fill="#B9B2AB"/>
+          <rect x="636" y="120" width="14" height="40" rx="3" fill="#B9B2AB"/>
+          <g id="platesL"></g><g id="platesR"></g>
+          <rect x="340" y="129" width="120" height="22" rx="3" fill="#6E6762" opacity=".6"/>
+          <text x="400" y="232" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="15" letter-spacing="3" fill="#A69C95">BARRA OLÍMPICA · 20 KG</text>
+        </svg>
+        <div class="kg"><b id="kg">20<small>kg</small></b><span id="kg-label">Só a barra. Bora carregar?</span></div>
+        <div class="legend">
+          <span><i style="background:#FF5A1A"></i>Musculação 25 kg</span>
+          <span><i style="background:#F6F2EE"></i>Funcional 20 kg</span>
+          <span><i style="background:#E3266F"></i>Spinning 15 kg</span>
+          <span><i style="background:#F7B21B"></i>Corrida e triathlon 10 kg</span>
+        </div>
+      </div>
+      <div class="steps" id="steps">
+        <article class="step" data-label="Musculação na barra. 70 kg e subindo.">
+          <span class="tag">+ 25 kg de cada lado</span>
+          <h3>Musculação</h3>
+          <p>Sala ampla e iluminada, com máquinas guiadas, cabos, peso livre e aparelhos novos chegando. O mais recente foi um equipamento de movimento guiado que deixa supino e desenvolvimento mais estáveis e seguros.</p>
+          <figure><img src="img/maquina2.jpg" alt="Aluno treinando no novo aparelho de movimento guiado da R4"></figure>
+          <ul><li>Seg a sex · 05h às 21h30</li><li>Sábado · 08h às 12h</li></ul>
+        </article>
+        <article class="step" data-label="Funcional somado. 110 kg na barra.">
+          <span class="tag">+ 20 kg de cada lado</span>
+          <h3>Funcional</h3>
+          <p>Aulas em grupo para ganhar força, mobilidade e fôlego. Turma cedo para quem treina antes do trabalho e turma no fim da tarde para quem chega depois.</p>
+          <figure><img src="img/esteiras.jpg" alt="Alunas em aula de funcional na R4 Sports"></figure>
+          <ul><li>Seg e qua · 06h</li><li>Ter e qui · 18h30</li></ul>
+        </article>
+        <article class="step" data-label="Spinning entrou. 140 kg, cuidado com a lombar!">
+          <span class="tag">+ 15 kg de cada lado</span>
+          <h3>Spinning</h3>
+          <p>Aula de bike com música alta e ritmo de prova. Duas turmas seguidas na segunda e na quarta e uma turma bem cedo na terça e na quinta.</p>
+          <figure><img src="img/ciclista.jpg" alt="Ciclista da equipe R4 em prova em Apucarana"></figure>
+          <ul><li>Seg e qua · 18h e 18h45</li><li>Ter e qui · 07h</li></ul>
+        </article>
+        <article class="step" data-label="Barra cheia: 160 kg. Isso é treino R4.">
+          <span class="tag">+ 10 kg de cada lado</span>
+          <h3>Corrida e triathlon</h3>
+          <p>Grupo de corrida com treinos às terças e quintas e uma equipe que veste a camisa nas provas da região, do Duathlon Terrestre no Lago Jaboti à Caminhada Agosto Lilás. Personal trainer disponível para planos individuais.</p>
+          <figure><img src="img/corredor.jpg" alt="Atleta da R4 correndo em prova"></figure>
+          <ul><li>Grupo de corrida · ter e qui 18h30</li><li>Personal trainer</li></ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="estrutura" aria-labelledby="est-t" style="padding-top:2rem">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Estrutura</p>
+      <h2 id="est-t">Ferro, luz natural e <span class="o">espaço pra treinar</span></h2>
+    </div>
+    <div class="gear">
+      <figure class="ph g1 rv"><img src="img/maquina1.jpg" alt="Sala de musculação da R4 Sports com aparelhos e janelas amplas" data-par><figcaption>Sala de musculação</figcaption></figure>
+      <figure class="ph g2 rv"><img src="img/bemvindo.jpg" alt="Parede laranja com o logo R4 Sports e a frase Bem-vindos" data-par><figcaption>Recepção</figcaption></figure>
+      <figure class="ph g3 rv"><img src="img/esteiras.jpg" alt="Esteiras e área de alongamento" data-par><figcaption>Cardio</figcaption></figure>
+      <div class="ph g4 rv">
+        <figure class="ph"><img src="img/maquina3.jpg" alt="Aparelho guiado para supino" data-par><figcaption>Supino guiado</figcaption></figure>
+        <figure class="ph"><img src="img/maquina4.jpg" alt="Aluno treinando peito no aparelho novo" data-par><figcaption>Peso livre</figcaption></figure>
+      </div>
+      <div class="novo rv">
+        <span class="badge">Novidade na R4</span>
+        <p><b>A R4 não para de evoluir.</b> Chegou um aparelho de movimento guiado para deixar o treino mais completo, com mais estabilidade, mais segurança e novas opções de exercício. Passe aqui e teste.</p>
+        <a class="btn btn-line" href="https://www.instagram.com/reel/DcTIMZ2RaJC/" target="_blank" rel="noopener"><span>Ver o vídeo</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="horarios" aria-labelledby="hor-t" style="background:var(--ink-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Horários</p>
+      <h2 id="hor-t">Escolha o dia, <span class="o">a gente tem horário</span></h2>
+    </div>
+    <div class="hours">
+      <aside class="open-card">
+        <div class="now"><span class="dot" id="dot"></span><span id="now-txt">Confira o funcionamento</span></div>
+        <div class="open-row"><span>Segunda a sexta</span><b>05h–21h30</b></div>
+        <div class="open-row"><span>Sábado</span><b>08h–12h</b></div>
+        <div class="open-row"><span>Domingo</span><b>Fechado</b></div>
+        <a class="btn btn-wa" data-wa="Olá! Quero tirar uma dúvida sobre os horários da R4 Sports." href="#"><span>Tirar dúvida</span></a>
+      </aside>
+      <div>
+        <div class="days" id="days" role="group" aria-label="Dia da semana"></div>
+        <ol class="tl" id="tl" aria-live="polite"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="comunidade" aria-labelledby="com-t">
+  <div class="wrap comm">
+    <div class="comm-ph">
+      <figure class="ph rv"><img src="img/equipe-corrida.jpg" alt="Equipe R4 reunida antes de uma prova de corrida" data-par></figure>
+      <figure class="ph rv"><img src="img/equipe-prova.jpg" alt="Alunos da R4 com camisetas da equipe em evento" data-par></figure>
+      <figure class="ph rv"><img src="img/largada.jpg" alt="Largada do Duathlon Terrestre no Lago Jaboti" data-par></figure>
+    </div>
+    <div>
+      <p class="eyebrow">Comunidade</p>
+      <h2 id="com-t">Aqui ninguém <span class="o">treina sozinho</span></h2>
+      <p class="lead" style="margin-top:1rem">A R4 leva os alunos para a rua. Tem prova, tem caminhada beneficente, tem camiseta da equipe e café da manhã depois da largada.</p>
+      <div class="events">
+        <div class="ev"><div class="d"><b>07</b><span>JUN</span></div><div><h3>Duathlon Terrestre</h3><p>Corrida e bike no Lago Jaboti, com apoio da R4 Sports e kits entregues no local da prova.</p></div></div>
+        <div class="ev"><div class="d"><b>30</b><span>AGO</span></div><div><h3>Caminhada Agosto Lilás</h3><p>Encerramento do Agosto Lilás saindo da academia, com sorteio de camisetas e café compartilhado na volta.</p></div></div>
+        <div class="ev"><div class="d"><b>3ª</b><span>E 5ª</span></div><div><h3>Grupo de corrida</h3><p>Treino coletivo às 18h30. Leve um amigo, o primeiro treino é para conhecer o grupo.</p></div></div>
+      </div>
+      <div class="hero-cta"><a class="btn btn-line" href="https://www.instagram.com/academiar4sports/" target="_blank" rel="noopener"><span>Seguir @academiar4sports</span></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="planos" aria-labelledby="pla-t" style="background:var(--ink-2);overflow:hidden">
+  <svg class="kb" id="kb" viewBox="0 0 100 120" aria-hidden="true"><path d="M30 38a20 20 0 1 1 40 0" fill="none" stroke="#F6F2EE" stroke-width="9"/><circle cx="50" cy="78" r="38" fill="#F6F2EE"/></svg>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Planos</p>
+      <h2 id="pla-t">Escolha o seu <span class="o">e comece amanhã às 5h</span></h2>
+      <p class="lead">Fale com a equipe pelo WhatsApp para saber os valores atualizados, condições de matrícula e agendar uma aula experimental.</p>
+    </div>
+    <div class="plans" id="plans"></div>
+    <p class="plans-note">Valores e condições confirmados pela recepção no WhatsApp.</p>
+  </div>
+</section>
+
+<section class="sec" id="local" aria-labelledby="loc-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Localização</p>
+      <h2 id="loc-t">Na Avenida Jaboti, <span class="o">pertinho do lago</span></h2>
+    </div>
+    <div class="local">
+      <a class="map" id="map-link" href="#" target="_blank" rel="noopener" aria-label="Abrir a localização da R4 Sports no Google Maps">
+        <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="600" height="400" fill="#14110F"/>
+          <g stroke="#26211E" stroke-width="10" fill="none">
+            <path d="M-20 300 L640 120"/><path d="M80 -20 L190 420"/><path d="M380 -20 L470 420"/><path d="M-20 80 L640 60"/>
+          </g>
+          <path d="M60 330 C120 250 260 290 300 220 S470 140 620 170" stroke="#3A332E" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <path d="M60 330 C120 250 260 290 300 220 S470 140 620 170" stroke="#FF5A1A" stroke-width="3" stroke-dasharray="10 9" fill="none"/>
+          <ellipse cx="150" cy="140" rx="95" ry="52" fill="#1B3A3A"/>
+          <text x="150" y="146" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="18" letter-spacing="3" fill="#7FB3AE">LAGO JABOTI</text>
+          <text x="470" y="128" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="14" letter-spacing="2" fill="#A69C95" transform="rotate(-14 470 128)">AV. JABOTI</text>
+          <g transform="translate(330 208)">
+            <circle r="34" fill="#FF5A1A" opacity=".18"><animate attributeName="r" values="20;44;20" dur="2.4s" repeatCount="indefinite"/></circle>
+            <path d="M0 18 C-16 0 -20 -8 -20 -16 a20 20 0 0 1 40 0 c0 8 -4 16 -20 34z" fill="#FF5A1A" transform="translate(0 -18)"/>
+            <circle cy="-34" r="7" fill="#0F0D0C"/>
+            <rect x="26" y="-60" width="96" height="30" rx="4" fill="#F6F2EE"/>
+            <text x="74" y="-39" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-style="italic" font-weight="900" font-size="18" fill="#0F0D0C">R4 SPORTS</text>
+          </g>
+        </svg>
+        <span class="open">Abrir no Google Maps ↗</span>
+      </a>
+      <div class="addr">
+        <address><b>Academia R4 Sports</b>Avenida Jaboti, 850<br>Jardim Menegazzo · Apucarana-PR<br>CEP 86802-000</address>
+        <p class="tels" style="font-variant-numeric:tabular-nums;color:var(--muted)">Telefones: <b style="color:var(--chalk)">(43) 9 9973-3594</b> · <b style="color:var(--chalk)">(43) 9 9911-6206</b></p>
+        <div><button class="copy" id="copy" type="button">Copiar endereço</button></div>
+        <div class="row">
+          <a class="btn btn-r4" id="maps" href="#" target="_blank" rel="noopener"><span>Google Maps</span></a>
+          <a class="btn btn-line" id="waze" href="#" target="_blank" rel="noopener"><span>Waze</span></a>
+        </div>
+        <div class="row">
+          <a class="btn btn-wa" data-wa="Olá! Estou indo até a R4 Sports, pode me ajudar com a localização?" href="#"><span>WhatsApp</span></a>
+          <a class="btn btn-line" href="https://www.instagram.com/academiar4sports/" target="_blank" rel="noopener"><span>Instagram</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" aria-labelledby="fin-t">
+  <span class="big-r4" aria-hidden="true">R4</span>
+  <div class="wrap">
+    <p class="eyebrow">Primeiro treino</p>
+    <h2 id="fin-t">A barra tá carregada. <span class="o">Falta você.</span></h2>
+    <div class="hero-cta">
+      <a class="btn btn-wa" data-wa="Olá! Quero começar a treinar na R4 Sports. Como faço a matrícula?" href="#"><span>Quero começar</span></a>
+      <a class="btn btn-line" href="https://www.instagram.com/academiar4sports/" target="_blank" rel="noopener"><span>Instagram</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Academia R4 Sports · Av. Jaboti, 850, Apucarana-PR</span>
+    <span><a href="https://www.instagram.com/academiar4sports/" target="_blank" rel="noopener">@academiar4sports</a></span>
+  </div>
+</footer>
+
+<a class="fab" data-wa="Olá! Vim pelo site da R4 Sports." href="#" aria-label="Falar com a R4 Sports no WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#fff" d="M16 3C9 3 3.4 8.6 3.4 15.5c0 2.4.7 4.7 1.9 6.6L3.3 29l7.1-1.9c1.8 1 3.8 1.5 5.9 1.5 6.9 0 12.6-5.6 12.6-12.6C28.9 8.6 23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.2 1.1 1.1-4.1-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6 0-5.7 4.7-10.4 10.5-10.4 5.7 0 10.5 4.7 10.5 10.4S21.7 26.1 16 26.1zm5.8-7.8c-.3-.2-1.9-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6l-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.3 3.5 5.5 4.9 2.7 1.1 3.3.9 3.9.8.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.7-.5z"/></svg>
+</a>
+
+<script>
+/* ===== CONFIGURAÇÃO — edite aqui ===== */
+const CONFIG = {
+  whatsapp: "5543999733594",          // (43) 9 9973-3594 — DDI+DDD, só dígitos
+  panorama: "img/fachada-360.jpg",     // panorâmica 360° da fachada (equirretangular). Se não existir, usa a provisória
+  panoramaFallback: "img/panorama-provisoria.jpg",
+  endereco: "Academia R4 Sports, Avenida Jaboti, 850, Apucarana - PR, 86802-000",
+  planos: [
+    { nome:"Musculação", preco:null, who:"Para quem quer evoluir no ferro com liberdade de horário.",
+      itens:["Sala de musculação completa","Seg a sex 05h–21h30 e sáb 08h–12h","Orientação da equipe no salão","Aparelhos novos de movimento guiado"] },
+    { nome:"R4 Completo", preco:null, destaque:"Mais completo", who:"Musculação e todas as aulas coletivas no mesmo plano.",
+      itens:["Tudo do plano Musculação","Funcional seg/qua 06h e ter/qui 18h30","Spinning seg/qua 18h e 18h45, ter/qui 07h","Grupo de corrida ter/qui 18h30"] },
+    { nome:"Corrida & Triathlon", preco:null, who:"Para quem quer correr em grupo e encarar provas.",
+      itens:["Treinos coletivos ter e qui 18h30","Equipe R4 nas provas da região","Bike e funcional para complementar","Camiseta e eventos da equipe"] },
+    { nome:"Personal Trainer", preco:null, who:"Treino individual montado para o seu objetivo.",
+      itens:["Avaliação e plano personalizado","Acompanhamento em cada sessão","Horário combinado com o profissional","Ideal para começar com segurança"] }
+  ]
+};
+/* ===================================== */
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const waLink = msg => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+
+document.querySelectorAll('[data-wa]').forEach(a=>{a.href=waLink(a.dataset.wa);a.target='_blank';a.rel='noopener'});
+const q = encodeURIComponent(CONFIG.endereco);
+const gmaps = `https://www.google.com/maps/search/?api=1&query=${q}`;
+document.getElementById('maps').href = gmaps;
+document.getElementById('map-link').href = gmaps;
+document.getElementById('waze').href = `https://waze.com/ul?q=${q}&navigate=yes`;
+document.getElementById('yr').textContent = new Date().getFullYear();
+document.getElementById('copy').addEventListener('click', e=>{
+  const b=e.currentTarget, t="Avenida Jaboti, 850 - Jardim Menegazzo, Apucarana - PR, 86802-000";
+  const ok=()=>{b.textContent='Endereço copiado';setTimeout(()=>b.textContent='Copiar endereço',2000)};
+  try{navigator.clipboard.writeText(t).then(ok,()=>{selectAddr()})}catch(_){selectAddr()}
+  function selectAddr(){const r=document.createRange();r.selectNodeContents(document.querySelector('.addr address'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selecionado, use Ctrl+C'}
+});
+
+/* fita */
+const mods=['Musculação','Funcional','Spinning','Corrida','Triathlon','Personal Trainer'];
+document.getElementById('tape').innerHTML = [...mods,...mods,...mods,...mods].map(m=>`<span>${m}</span>`).join('');
+
+/* panorâmica arrastável */
+(function(){
+  const el=document.getElementById('pano'); let src=CONFIG.panoramaFallback, iw=2648, ih=640;
+  let off=0, drag=false, lastX=0, vel=0, last=performance.now();
+  function setImg(s,w,h){src=s;iw=w;ih=h;el.style.backgroundImage=`url("${s}")`}
+  setImg(src,iw,ih);
+  const test=new Image(); test.onload=()=>setImg(CONFIG.panorama,test.naturalWidth,test.naturalHeight); test.src=CONFIG.panorama;
+  el.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;el.classList.add('drag');el.setPointerCapture(e.pointerId)});
+  el.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;lastX=e.clientX;off+=dx;vel=dx});
+  const end=()=>{drag=false;el.classList.remove('drag')};
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);
+  function tick(t){const dt=Math.min(64,t-last);last=t;
+    if(!drag){ vel*=0.94; off+=vel + (reduce?0:-0.022*dt); }
+    const w=iw*(el.clientHeight/ih)||1; off=((off%w)+w)%w - w;
+    el.style.backgroundPosition=`${off}px 50%`; requestAnimationFrame(tick)}
+  requestAnimationFrame(tick);
+})();
+
+/* barra que carrega */
+const PL=[ {kg:25,h:230,w:34,c:'#FF5A1A',t:'#fff'}, {kg:20,h:206,w:30,c:'#F6F2EE',t:'#0F0D0C'}, {kg:15,h:176,w:26,c:'#E3266F',t:'#fff'}, {kg:10,h:146,w:22,c:'#F7B21B',t:'#0F0D0C'} ];
+const NS='http://www.w3.org/2000/svg', gL=document.getElementById('platesL'), gR=document.getElementById('platesR');
+const plates=[];
+(function build(){let xr=652, xl=148;
+  PL.forEach((p,i)=>{
+    [['R',xr],['L',xl-p.w]].forEach(([side,x])=>{
+      const g=document.createElementNS(NS,'g');
+      g.innerHTML=`<rect x="${x}" y="${140-p.h/2}" width="${p.w}" height="${p.h}" rx="6" fill="${p.c}"/><rect x="${x+3}" y="${140-p.h/2+8}" width="${p.w-6}" height="${p.h-16}" rx="4" fill="none" stroke="#0F0D0C" stroke-opacity=".18" stroke-width="2"/><text x="${x+p.w/2}" y="${140-p.h/2+22}" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="900" font-style="italic" font-size="14" fill="${p.t}">${p.kg}</text>`;
+      (side==='R'?gR:gL).appendChild(g); plates.push({g,i,dir:side==='R'?1:-1});
+    });
+    xr+=p.w+3; xl-=p.w+3;
+  });
+})();
+const steps=[...document.querySelectorAll('.step')], kgEl=document.getElementById('kg'), kgLab=document.getElementById('kg-label'), load=document.getElementById('load');
+let shownKg=20;
+function updateBar(){
+  const r=load.getBoundingClientRect(), vh=innerHeight;
+  // progresso de cada etapa: quando o topo do card passa de 65% da tela
+  let total=20, active=-1;
+  steps.forEach((s,i)=>{
+    const sr=s.getBoundingClientRect(); const p=Math.max(0,Math.min(1,(vh*0.78-sr.top)/(vh*0.3)));
+    plates.filter(pl=>pl.i===i).forEach(pl=>{pl.g.style.transform=`translateX(${pl.dir*(1-p)*260}px)`;pl.g.style.opacity=p<0.02?0:1});
+    total+=2*PL[i].kg*p; if(p>0.5) active=i;
+  });
+  steps.forEach((s,i)=>s.classList.toggle('on',i===active));
+  const target=Math.round(total);
+  if(target!==shownKg){shownKg=target;kgEl.firstChild.nodeValue=String(target)}
+  kgLab.textContent = active<0 ? 'Só a barra. Bora carregar?' : steps[active].dataset.label;
+}
+plates.forEach(pl=>pl.g.style.transition=reduce?'none':'transform .15s linear');
+
+/* horários */
+const AGENDA={
+  1:[['06:00','Funcional','Turma da manhã','Aula'],['18:00','Spinning','1ª turma','Bike'],['18:45','Spinning','2ª turma','Bike']],
+  2:[['07:00','Spinning','Turma da manhã','Bike'],['18:30','Funcional','Turma da noite','Aula'],['18:30','Grupo de corrida','Treino coletivo','Corrida']],
+  6:[]
+};
+AGENDA[3]=AGENDA[1]; AGENDA[4]=AGENDA[2]; AGENDA[5]=[];
+const DIAS=[[1,'Seg'],[2,'Ter'],[3,'Qua'],[4,'Qui'],[5,'Sex'],[6,'Sáb'],[0,'Dom']];
+const daysEl=document.getElementById('days'), tl=document.getElementById('tl'), today=new Date().getDay();
+function renderDay(d){
+  daysEl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.d===d)));
+  if(d===0){tl.innerHTML=`<li><time>—</time><div><b>Domingo de descanso</b><small>A R4 abre de novo na segunda às 05h.</small></div></li>`;return}
+  const open = d===6 ? ['08:00','12:00'] : ['05:00','21:30'];
+  const rows=[[open[0],'Abertura','Musculação liberada','Salão'], ...(AGENDA[d]||[]), [open[1],'Fechamento','Último treino do dia','Salão']];
+  rows.sort((a,b)=>a[0].localeCompare(b[0]));
+  tl.innerHTML=rows.map(r=>`<li><time>${r[0].replace(':00','h').replace(':','h')}</time><div><b>${r[1]}</b><small>${r[2]}</small></div><span class="chip">${r[3]}</span></li>`).join('');
+}
+daysEl.innerHTML=DIAS.map(([d,n])=>`<button type="button" id="dia-${d}" data-d="${d}" class="${d===today?'today':''}">${n}</button>`).join('');
+daysEl.addEventListener('click',e=>{const b=e.target.closest('button');if(b)renderDay(+b.dataset.d)});
+renderDay(today);
+(function nowOpen(){
+  const n=new Date(), d=n.getDay(), m=n.getHours()*60+n.getMinutes();
+  const open = (d>=1&&d<=5&&m>=300&&m<1290) || (d===6&&m>=480&&m<720);
+  document.getElementById('dot').classList.toggle('live',open);
+  document.getElementById('now-txt').textContent = open ? 'Aberto agora' : 'Fechado agora · abre ' + (d===6&&m<480?'às 08h': (d===5&&m>=1290)||d===6?'sáb 08h': d===0||d===6?'seg 05h':'às 05h');
+})();
+
+/* planos */
+document.getElementById('plans').innerHTML = CONFIG.planos.map(p=>`
+  <article class="plan rv ${p.destaque?'hot':''}">
+    ${p.destaque?`<span class="flag">${p.destaque}</span>`:''}
+    <h3>${p.nome}</h3>
+    <p class="who">${p.who}</p>
+    ${p.preco ? `<div class="price">R$ ${p.preco}<small>/mês</small></div>` : `<div class="price ask">Valor no WhatsApp</div>`}
+    <ul>${p.itens.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <a class="btn ${p.destaque?'btn-r4':'btn-line'}" href="${waLink(`Olá! Tenho interesse no plano ${p.nome} da R4 Sports. Pode me passar valores e condições?`)}" target="_blank" rel="noopener"><span>Quero esse plano</span></a>
+  </article>`).join('');
+
+/* contadores */
+const counters=[...document.querySelectorAll('[data-count]')];
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);
+  const el=e.target,to=+el.dataset.count,dec=+(el.dataset.dec||0),suf=el.dataset.suffix||'';if(reduce)return;
+  const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1100),v=to*(1-Math.pow(1-k,3));el.textContent=v.toFixed(dec).replace('.',',')+suf;if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});
+counters.forEach(c=>cio.observe(c));
+
+/* revelação: só para o que está abaixo da dobra */
+const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove('pre');rio.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+if(!reduce) document.querySelectorAll('.rv').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight){el.classList.add('pre');rio.observe(el)}});
+
+/* scroll: topo, progresso, parallax de pesos e fotos, kettlebell, fita */
+const topBar=document.getElementById('top'), prog=document.getElementById('progress'), gears=[...document.querySelectorAll('.float-gear')], tape=document.getElementById('tape'), kb=document.getElementById('kb'), pars=[...document.querySelectorAll('[data-par]')];
+let ticking=false;
+function onScroll(){
+  const y=scrollY, H=document.documentElement.scrollHeight-innerHeight;
+  topBar.classList.toggle('solid',y>40);
+  prog.style.transform=`scaleX(${H>0?y/H:0})`;
+  updateBar();
+  if(!reduce){
+    gears.forEach(g=>{const s=+g.dataset.speed;g.style.transform=`translateY(${y*s}px) rotate(${y*s*0.6}deg)`});
+    tape.style.transform=`translateX(${-(y*0.35)%1200}px)`;
+    const kr=kb.parentElement.getBoundingClientRect();kb.style.transform=`translateY(${-kr.top*0.15}px) rotate(${kr.top*-0.06}deg)`;
+    pars.forEach(img=>{const r=img.parentElement.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;const p=(r.top+r.height/2-innerHeight/2)/innerHeight;img.style.transform=`translateY(${-8+p*-10}%)`});
+  }
+  ticking=false;
+}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
+addEventListener('resize',onScroll);
+onScroll();
+</script>
+
+</body>
+</html>
